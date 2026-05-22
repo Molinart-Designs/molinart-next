@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+/* Molinart legacy theme overrides — main styles in /public/css/style.css */
+:root {
+  --molinart-yellow: #dabd1d;
+}
+
+html,
+body {
+  font-family: var(--font-roboto), "Roboto", sans-serif;
+}
+
+.main-font {
+  font-family: var(--font-oswald), "Oswald", sans-serif;
+}
+
+.alt-font {
+  font-family: var(--font-roboto), "Roboto", sans-serif;
+}
+
+.mons-font {
+  font-family: "Montserrat", sans-serif;
+}
+
+/* Next/Image compatibility with legacy img classes */
+.slider-image img,
+.single-work img,
+.icon {
+  max-width: 100%;
+  height: auto;
+}

@@ -1,0 +1,164 @@
+/* Restaurar scroll salvo cuando pagePiling está activo (desktop) */
+html,
+body {
+    overflow-x: hidden;
+    overflow-y: auto !important;
+}
+
+html.pp-enabled,
+html.pp-enabled body {
+    overflow: hidden !important;
+}
+
+/* Loader: ocultar sin depender de React/jQuery */
+.loader-bg {
+    animation: molinart-loader-out 0.4s ease-in 0.5s forwards;
+}
+
+.loader-bg.is-hidden {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+@keyframes molinart-loader-out {
+    to {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        z-index: -1;
+    }
+}
+
+.loader-spinner-wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+}
+
+.scroll-downs {
+    position: absolute;
+    bottom: 25px;
+    right: 0;
+    left: 0;
+    margin: auto;
+
+    width :34px;
+    height: 55px;
+}
+
+.mousey {
+    width: 3px;
+    padding: 10px 15px;
+    height: 35px;
+    border: 2px solid #fff;
+    border-radius: 25px;
+    opacity: 0.75;
+    box-sizing: content-box;
+}
+
+.scroller {
+    width: 3px;
+    height: 10px;
+    border-radius: 25%;
+    background-color: #fff;
+    animation-name: scroll;
+    animation-duration: 2.2s;
+    animation-timing-function: cubic-bezier(.15,.41,.69,.94);
+    animation-iteration-count: infinite;
+}
+
+@keyframes scroll {
+    0% { opacity: 0; }
+    10% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(15px); opacity: 0;}
+}
+
+@media (max-width:961px)  {
+    .mousey {
+        border: 2px solid #000;
+    }
+
+    .scroller {
+        background-color: #000;
+    }
+}
+
+/* Header: logo a la izquierda, menú e idioma a la derecha */
+.molinart-top-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.molinart-top-navbar .molinart-header-logo {
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+    margin-right: auto;
+}
+
+.molinart-top-navbar .mega-logo {
+    position: static;
+    left: auto;
+    right: auto;
+    top: auto;
+}
+
+.navigation-toggle {
+    position: static;
+    top: auto;
+    right: auto;
+    flex-shrink: 0;
+    margin-left: auto;
+}
+
+.molinart-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    list-style: none;
+}
+
+.molinart-header-actions .sidemenu_btn {
+    position: static;
+    margin-right: 0;
+}
+
+.molinart-language-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    height: 36px;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    color: #ffffff;
+    font-family: "Roboto", sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1;
+    text-decoration: none;
+    transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
+}
+
+.molinart-language-toggle:hover,
+.molinart-language-toggle:focus {
+    background: #dabd1d;
+    border-color: #dabd1d;
+    color: #171717;
+    text-decoration: none;
+}
+
+@media (max-width: 767px) {
+    .molinart-top-navbar {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+}
