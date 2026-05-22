@@ -6,7 +6,6 @@ import { hasLocale, locales } from "@/content/i18n";
 import { siteConfig, siteMetadata } from "@/content/site";
 
 import "../globals.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -78,23 +77,8 @@ export default async function RootLayout({
     <html lang={lang} className={`${oswald.variable} ${roboto.variable}`}>
       <head>
         <link rel="icon" href="/images/favicon.ico" />
-        <link rel="stylesheet" href="/css/jquery.pagepiling.css" />
-        <link rel="stylesheet" href="/css/owl.carousel.min.css" />
-        <link rel="stylesheet" href="/css/LineIcons.min.css" />
-        <link rel="stylesheet" href="/css/style.css" />
-        <link rel="stylesheet" href="/css/extras.css" />
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css"
-        />
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-        />
       </head>
-      <body data-spy="scroll" data-target=".navbar" data-offset={90}>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

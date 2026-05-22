@@ -1,61 +1,67 @@
 # Molinart — Portfolio (Next.js)
 
-Reconstrucción del portfolio [molinart.net](https://molinart.net/) en Next.js, manteniendo el diseño, animaciones y estructura del sitio Laravel original.
+Portfolio moderno de **Emilio Molina / Molinart**, inspirado en la identidad visual de [molinart.net](https://molinart.net/) e implementado con React, Tailwind CSS y Framer Motion.
 
 ## Stack
 
 - Next.js 16 (App Router) + TypeScript
-- CSS original (`public/css/style.css`) + Bootstrap 4
-- **pagePiling** — scroll vertical por secciones (escritorio ≥1280px)
-- **Cronología horizontal** — `timeline.js` con Prev/Next
-- **Owl Carousel** — carrusel de experiencia
-- Barras de progreso animadas — `jquery.appear`
-- Menú lateral deslizante + loader SVG
+- Tailwind CSS v4 (tokens Molinart)
+- Framer Motion (animaciones sutiles)
+- i18n: `/es` (por defecto) y `/en`
+- Sin jQuery, Bootstrap, pagePiling, Owl Carousel ni CSS legacy
 
-## Secciones (igual que el sitio en vivo)
+## Secciones
 
-1. Inicio / Hero (imagen, círculos animados, scroll mouse)
-2. Resumen (4 pilares + barras de %)
-3. Cronología de Carrera
-4. Experiencia (carrusel)
-5. Tecnologías (iconos)
-6. Contacto (formulario visual; envío en fase posterior)
+1. Inicio / Home
+2. Resumen / Summary
+3. Cronología de Carrera / Career Timeline
+4. Experiencia / Experience (grid responsive)
+5. Tecnologías / Technologies
+6. Ask Emilio AI (frontend only, próximamente)
+7. Contacto / Contact (formulario sin envío real)
 
 ## Instalación
 
 ```bash
 cd molinart-next
-npm install --legacy-peer-deps
+npm install
 npm run dev
 ```
 
-Abre [http://localhost:3000](http://localhost:3000). En pantallas anchas verás el scroll por secciones y la navegación lateral derecha como en el sitio original.
+- Español: [http://localhost:3000/es](http://localhost:3000/es)
+- Inglés: [http://localhost:3000/en](http://localhost:3000/en)
+- `/` redirige a `/es` o `/en` según `Accept-Language`
 
-## Estructura
-
-```
-content/           # Textos y datos editables
-public/css/        # style.css, pagepiling, owl
-public/js/         # pagepiling, timeline
-public/images/     # fondos, logo, slider, portfolio
-src/components/molinart/   # Secciones y legacy-init
-```
-
-## Build / Vercel
+## Build
 
 ```bash
 npm run build
 npm start
 ```
 
-Despliega la carpeta `molinart-next` en Vercel sin variables de entorno.
+## Estructura
+
+```
+molinart-next/
+├── content/                 # Textos i18n (es/en)
+├── public/images/           # Logo, fondos, fotos
+├── public/files/            # CV en PDF
+├── src/
+│   ├── app/[lang]/         # layout + page
+│   ├── components/
+│   │   ├── layout/         # header, menú, nav bullets, footer
+│   │   └── sections/       # 7 secciones
+│   ├── hooks/              # useActiveSection
+│   └── lib/                # utils (cn)
+└── src/proxy.ts            # redirect / → /es|/en
+```
 
 ## Próximas fases
 
-- Ask Emilio AI (sección nueva)
-- Envío de contacto (Resend)
-- Supabase / IA si aplica
+- Ask Emilio AI (API + Vercel AI SDK)
+- Envío de contacto (Resend u otro)
+- Supabase u otros backends si aplican
 
-## Nota
+## Licencia
 
-El formulario de contacto replica el diseño del original; el botón **Enviar** permanece deshabilitado hasta integrar el backend.
+Proyecto privado — portfolio personal.

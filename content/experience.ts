@@ -10,10 +10,6 @@ export const experienceContent = {
       value: "16+",
       label: "Años de trayectoria",
     },
-    carousel: {
-      previous: "Anterior",
-      next: "Siguiente",
-    },
     items: [
       {
         id: "platforms",
@@ -53,10 +49,6 @@ export const experienceContent = {
       value: "16+",
       label: "Years of experience",
     },
-    carousel: {
-      previous: "Previous",
-      next: "Next",
-    },
     items: [
       {
         id: "platforms",
@@ -90,7 +82,6 @@ export const experienceContent = {
 } as const satisfies LocalizedContent<{
   heading: { accent: string; title: string };
   stats: { value: string; label: string };
-  carousel: { previous: string; next: string };
   items: readonly {
     id: string;
     image: string;

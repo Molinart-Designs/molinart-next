@@ -2,7 +2,7 @@ import type { LocalizedContent } from "@/content/i18n";
 
 export const heroContent = {
   es: {
-    greeting: "Hola, soy",
+    greeting: "Hola, Yo soy",
     name: "EMILIO MOLINA.",
     tagline:
       "Principal Software Engineer con 16+ años creando, modernizando y escalando plataformas full stack.",

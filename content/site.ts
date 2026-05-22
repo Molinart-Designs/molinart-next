@@ -52,10 +52,11 @@ export const siteContent = {
   es: {
     navigation: [
       { id: "home", label: "Inicio", href: "#home" },
-      { id: "about", label: "Perfil", href: "#about" },
-      { id: "timeline", label: "Trayectoria", href: "#timeline" },
-      { id: "portfolio", label: "Experiencia", href: "#portfolio" },
+      { id: "about", label: "Resumen", href: "#about" },
+      { id: "timeline", label: "Cronología de Carrera", href: "#timeline" },
+      { id: "experience", label: "Experiencia", href: "#experience" },
       { id: "technologies", label: "Tecnologías", href: "#technologies" },
+      { id: "ask-emilio", label: "Ask Emilio AI", href: "#ask-emilio" },
       { id: "contact", label: "Contacto", href: "#contact" },
     ],
     menu: {
@@ -79,10 +80,11 @@ export const siteContent = {
   en: {
     navigation: [
       { id: "home", label: "Home", href: "#home" },
-      { id: "about", label: "Profile", href: "#about" },
-      { id: "timeline", label: "Career", href: "#timeline" },
-      { id: "portfolio", label: "Experience", href: "#portfolio" },
+      { id: "about", label: "Summary", href: "#about" },
+      { id: "timeline", label: "Career Timeline", href: "#timeline" },
+      { id: "experience", label: "Experience", href: "#experience" },
       { id: "technologies", label: "Technologies", href: "#technologies" },
+      { id: "ask-emilio", label: "Ask Emilio AI", href: "#ask-emilio" },
       { id: "contact", label: "Contact", href: "#contact" },
     ],
     menu: {
@@ -105,4 +107,8 @@ export const siteContent = {
   },
 } as const;
 
-export type NavigationItem = (typeof siteContent.es.navigation)[number];
+export type NavigationItem = {
+  id: string;
+  label: string;
+  href: string;
+};

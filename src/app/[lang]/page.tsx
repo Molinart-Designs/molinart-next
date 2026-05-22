@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { PagePilingSite } from "@/components/molinart/page-piling-site";
+import { PortfolioSite } from "@/components/portfolio-site";
 import { hasLocale } from "@/content/i18n";
 
 export default async function HomePage({
@@ -14,5 +14,5 @@ export default async function HomePage({
     notFound();
   }
 
-  return <PagePilingSite locale={lang} />;
+  return <PortfolioSite locale={lang} />;
 }

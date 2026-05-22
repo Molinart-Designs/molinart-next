@@ -1,31 +1,72 @@
 @import "tailwindcss";
 
-/* Molinart legacy theme overrides — main styles in /public/css/style.css */
-:root {
-  --molinart-yellow: #dabd1d;
+@theme inline {
+  --color-molinart-yellow: #dabd1d;
+  --color-molinart-dark: #202020;
+  --color-molinart-darker: #171717;
+  --color-molinart-surface: #2b2b2b;
+  --color-molinart-muted: #a3a3a3;
+  --font-heading: var(--font-oswald);
+  --font-sans: var(--font-roboto);
 }
 
-html,
-body {
-  font-family: var(--font-roboto), "Roboto", sans-serif;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html.fullpage-active,
+  html.fullpage-active body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    @apply bg-molinart-dark font-sans text-white antialiased;
+  }
+
+  ::selection {
+    background-color: #dabd1d;
+    color: #202020;
+  }
 }
 
-.main-font {
-  font-family: var(--font-oswald), "Oswald", sans-serif;
-}
+@layer utilities {
+  .font-heading {
+    font-family: var(--font-oswald), "Oswald", sans-serif;
+  }
 
-.alt-font {
-  font-family: var(--font-roboto), "Roboto", sans-serif;
-}
+  .text-molinart-yellow {
+    color: #dabd1d;
+  }
 
-.mons-font {
-  font-family: "Montserrat", sans-serif;
-}
+  .bg-molinart-yellow {
+    background-color: #dabd1d;
+  }
 
-/* Next/Image compatibility with legacy img classes */
-.slider-image img,
-.single-work img,
-.icon {
-  max-width: 100%;
-  height: auto;
+  .border-molinart-yellow {
+    border-color: #dabd1d;
+  }
+
+  .section-overlay {
+    background-color: rgb(23 23 23 / 0.82);
+  }
+
+  @keyframes timeline-dot-pulse {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgb(218 189 29 / 0.55);
+    }
+    50% {
+      opacity: 0.65;
+      transform: scale(1.12);
+      box-shadow: 0 0 0 7px rgb(218 189 29 / 0);
+    }
+  }
+
+  .animate-timeline-dot {
+    animation: timeline-dot-pulse 1.35s ease-in-out infinite;
+  }
 }

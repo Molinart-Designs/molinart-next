@@ -4,10 +4,12 @@ import { locales } from "@/content/i18n";
 import { siteConfig } from "@/content/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return locales.map((locale) => ({
-    url: `${siteConfig.url}/${locale}`,
-    lastModified: new Date(),
+  const lastModified = new Date();
+
+  return locales.map((lang) => ({
+    url: `${siteConfig.url}/${lang}`,
+    lastModified,
     changeFrequency: "monthly",
-    priority: 1,
+    priority: lang === "es" ? 1 : 0.9,
   }));
 }
