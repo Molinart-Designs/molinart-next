@@ -7,14 +7,19 @@ export const askEmilioContent = {
       title: "Pregúntame sobre mi trayectoria.",
     },
     description:
-      "Próximamente podrás consultar mi experiencia, stack, liderazgo y trabajo con IA mediante un asistente integrado en Molinart.",
-    badge: "Próximamente",
+      "Asistente con IA entrenado con el contexto profesional de Emilio. Pregunta por stack, liderazgo, proyectos o trabajo con IA.",
+    badge: "En vivo",
     assistantName: "Asistente Molinart",
-    assistantHint: "Vista previa — sin backend conectado",
+    assistantHint: "Respuestas basadas en el perfil publicado de Emilio",
     placeholder:
       "Ej.: ¿Qué experiencia tienes liderando equipos y modernizando plataformas?",
     submit: "Enviar pregunta",
-    disabledTitle: "Disponible cuando se integre el SDK de IA",
+    thinking: "Pensando…",
+    errorGeneric: "No pudimos responder ahora. Intenta de nuevo en un momento.",
+    errorConfig: "El asistente no está configurado en el servidor.",
+    emptyAnswer: "Sin respuesta. Intenta reformular tu pregunta.",
+    youLabel: "Tú",
+    assistantLabel: "Emilio AI",
     suggestedQuestions: [
       "¿Cuál es tu experiencia con arquitectura full stack y productos SaaS?",
       "¿Qué proyectos has liderado en entornos enterprise?",
@@ -28,14 +33,19 @@ export const askEmilioContent = {
       title: "Ask me about my career.",
     },
     description:
-      "Soon you will be able to explore my experience, stack, leadership, and AI work through an assistant integrated into Molinart.",
-    badge: "Coming soon",
+      "AI assistant grounded in Emilio’s published professional context. Ask about stack, leadership, projects, or AI work.",
+    badge: "Live",
     assistantName: "Molinart Assistant",
-    assistantHint: "Preview — no backend connected",
+    assistantHint: "Answers grounded in Emilio’s published profile",
     placeholder:
       "e.g. What is your experience leading teams and modernizing platforms?",
     submit: "Send question",
-    disabledTitle: "Available when the AI SDK is integrated",
+    thinking: "Thinking…",
+    errorGeneric: "We could not reply right now. Please try again shortly.",
+    errorConfig: "The assistant is not configured on the server.",
+    emptyAnswer: "No answer returned. Try rephrasing your question.",
+    youLabel: "You",
+    assistantLabel: "Emilio AI",
     suggestedQuestions: [
       "What is your experience with full-stack architecture and SaaS products?",
       "Which enterprise initiatives have you led?",
@@ -51,6 +61,11 @@ export const askEmilioContent = {
   assistantHint: string;
   placeholder: string;
   submit: string;
-  disabledTitle: string;
+  thinking: string;
+  errorGeneric: string;
+  errorConfig: string;
+  emptyAnswer: string;
+  youLabel: string;
+  assistantLabel: string;
   suggestedQuestions: readonly string[];
 }>;

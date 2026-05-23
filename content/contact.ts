@@ -20,7 +20,11 @@ export const contactContent = {
       spamNotice:
         "Uso este medio solo para contacto personal. Tu información se utilizará para responderte y se eliminará después de 15 días.",
       submit: "Enviar",
-      disabledTitle: "El envío se habilitará en una fase posterior",
+      sending: "Enviando…",
+      success: "Mensaje enviado. Emilio te responderá pronto.",
+      errorGeneric: "No se pudo enviar. Intenta de nuevo.",
+      errorConfig: "El formulario no está configurado en el servidor.",
+      validationRequired: "Completa los campos obligatorios.",
     },
   },
   en: {
@@ -42,7 +46,11 @@ export const contactContent = {
       spamNotice:
         "I use this channel only for personal contact. Your information will be used to reply and removed after 15 days.",
       submit: "Send",
-      disabledTitle: "Sending will be enabled in a later phase",
+      sending: "Sending…",
+      success: "Message sent. Emilio will get back to you soon.",
+      errorGeneric: "Could not send. Please try again.",
+      errorConfig: "The form is not configured on the server.",
+      validationRequired: "Please fill in the required fields.",
     },
   },
 } as const satisfies LocalizedContent<{
@@ -56,6 +64,10 @@ export const contactContent = {
     message: string;
     spamNotice: string;
     submit: string;
-    disabledTitle: string;
+    sending: string;
+    success: string;
+    errorGeneric: string;
+    errorConfig: string;
+    validationRequired: string;
   };
 }>;
