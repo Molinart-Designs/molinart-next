@@ -132,7 +132,7 @@ o
 
 | Ruta | Variables necesarias |
 |------|----------------------|
-| `/api/chat` | `GOOGLE_GENERATIVE_AI_API_KEY`, `NEXT_PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` |
+| `/api/chat` | `GOOGLE_GENERATIVE_AI_API_KEY`, `GOOGLE_GENERATIVE_AI_MODEL` (opcional), Supabase vars |
 | `/api/contact` | Supabase + `SMTP_*`, `CONTACT_TO_EMAIL` |
 | `/api/chat` (lead email) | SMTP cuando el mensaje dispara hiring intent |
 | Email | `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_APP_PASSWORD`, `CONTACT_TO_EMAIL` |
@@ -196,27 +196,50 @@ o errores similares al crear sesión o mensajes de chat.
 
 ---
 
-### Gemini — API key (HTTP 500)
+### Gemini — API key o modelo (HTTP 429 / 502)
 
 **Síntoma**
 
 ```json
 {
-  "error": "Unexpected error processing chat"
+  "error": "AI quota exceeded. Try again later or switch models.",
+  "code": "AI_QUOTA_EXCEEDED"
+}
+```
+
+```json
+{
+  "error": "AI model is invalid or unavailable for this API key.",
+  "code": "AI_MODEL_INVALID"
+}
+```
+
+```json
+{
+  "error": "AI provider error while generating a response.",
+  "code": "AI_PROVIDER_ERROR"
 }
 ```
 
 **Causas habituales**
 
-- `GOOGLE_GENERATIVE_AI_API_KEY` ausente, mal copiada o sin permisos.
-- Cuota / billing de Google AI Studio agotada.
-- Modelo no disponible en la región (el proyecto usa `gemini-2.0-flash`).
+- `GOOGLE_GENERATIVE_AI_API_KEY` ausente, mal copiada o sin cuota.
+- Modelo sin acceso en tu cuenta (p. ej. `gemini-2.0-flash` vs `gemini-3.1-flash-lite`).
+- Cuota agotada (`429` / `RESOURCE_EXHAUSTED`).
 
 **Qué hacer**
 
-1. Genera una key en [Google AI Studio](https://aistudio.google.com/).
-2. Ponla en `.env.local` como `GOOGLE_GENERATIVE_AI_API_KEY`.
-3. Reinicia `npm run dev` y vuelve a probar `scripts/test-chat.sh`.
+1. Pon la API key en `.env.local` como `GOOGLE_GENERATIVE_AI_API_KEY`.
+2. Usa el modelo con cuota en tu cuenta:
+
+   ```env
+   GOOGLE_GENERATIVE_AI_MODEL=gemini-3.1-flash-lite
+   ```
+
+   Alternativa: `gemini-2.5-flash-lite`.
+
+3. Reinicia `npm run dev` tras cambiar variables.
+4. Revisa logs del servidor para el detalle del proveedor.
 
 ---
 

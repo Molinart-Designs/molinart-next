@@ -4,7 +4,12 @@ import { NextResponse } from "next/server";
 
 import { buildSystemPrompt } from "@/content/ai-profile-context";
 import { chatRequestSchema } from "@/lib/api-schemas";
-import { jsonError, jsonValidationError, isGoogleAiConfigured } from "@/lib/api-errors";
+import {
+  isGoogleAiConfigured,
+  jsonAiProviderError,
+  jsonError,
+  jsonValidationError,
+} from "@/lib/api-errors";
 import {
   buildChatLeadEmailHtml,
   isSmtpConfigured,
@@ -12,8 +17,6 @@ import {
 } from "@/lib/email";
 import { messageSignalsLeadIntent } from "@/lib/lead-intent";
 import { getSupabaseServerClient, isSupabaseConfigured } from "@/lib/supabase-server";
-
-const CHAT_MODEL_ID = "gemini-2.0-flash";
 
 export async function POST(request: Request) {
   try {
@@ -36,6 +39,9 @@ export async function POST(request: Request) {
     if (!supabase) {
       return jsonError("Database is not configured", 503);
     }
+
+    const modelName =
+      process.env.GOOGLE_GENERATIVE_AI_MODEL || "gemini-3.1-flash-lite";
 
     const { message, visitorEmail, locale } = parsed.data;
     let sessionId = parsed.data.sessionId;
@@ -114,11 +120,18 @@ export async function POST(request: Request) {
         content: row.content,
       }));
 
-    const { text: answer } = await generateText({
-      model: google(CHAT_MODEL_ID),
-      system: buildSystemPrompt(locale),
-      messages,
-    });
+    let answer: string;
+
+    try {
+      const result = await generateText({
+        model: google(modelName),
+        system: buildSystemPrompt(locale),
+        messages,
+      });
+      answer = result.text;
+    } catch (error) {
+      return jsonAiProviderError(error);
+    }
 
     const { error: assistantMessageError } = await supabase
       .from("chat_messages")
@@ -126,7 +139,7 @@ export async function POST(request: Request) {
         session_id: sessionId,
         role: "assistant",
         content: answer,
-        model: CHAT_MODEL_ID,
+        model: modelName,
       });
 
     if (assistantMessageError) {

@@ -61,6 +61,7 @@ Copia `.env.example` → `.env.local`:
 | Variable | Uso |
 |----------|-----|
 | `GOOGLE_GENERATIVE_AI_API_KEY` | Gemini (solo servidor) |
+| `GOOGLE_GENERATIVE_AI_MODEL` | Modelo Gemini (default: `gemini-3.1-flash-lite`; ej. `gemini-2.5-flash-lite`) |
 | `NEXT_PUBLIC_SUPABASE_URL` | URL del proyecto Supabase |
 | `SUPABASE_SERVICE_ROLE_KEY` | Escritura server-side (nunca en el cliente) |
 | `SMTP_HOST` | `smtp.gmail.com` |

@@ -71,6 +71,7 @@ En **Environment Variables** (Production, Preview y Development según prefieras
 | Variable | Obligatoria | Notas |
 |----------|-------------|--------|
 | `GOOGLE_GENERATIVE_AI_API_KEY` | Sí (chat) | Solo servidor. Desde Google AI Studio. |
+| `GOOGLE_GENERATIVE_AI_MODEL` | No | Default `gemini-3.1-flash-lite`. Ej. `gemini-2.5-flash-lite`. |
 | `NEXT_PUBLIC_SUPABASE_URL` | Sí | URL del proyecto Supabase (`https://xxx.supabase.co`). |
 | `SUPABASE_SERVICE_ROLE_KEY` | Sí | **Service role** — nunca en el cliente. |
 | `SMTP_HOST` | Sí (contacto) | `smtp.gmail.com` |
@@ -226,8 +227,8 @@ o
 
 1. Valida `GOOGLE_GENERATIVE_AI_API_KEY` en Production.
 2. Comprueba cuotas en Google AI Studio.
-3. El proyecto usa el modelo `gemini-2.0-flash`; si tu región/cuenta no lo soporta, ajusta el ID en `src/app/api/chat/route.ts` (solo si cambias código en un deploy futuro).
-4. Redeploy tras corregir la key.
+3. Ajusta `GOOGLE_GENERATIVE_AI_MODEL` si tu key no tiene acceso al modelo (p. ej. `gemini-3.1-flash-lite` o `gemini-2.5-flash-lite`).
+4. Redeploy tras corregir variables.
 
 ---
 
