@@ -109,7 +109,7 @@ export function HeroSection({ locale }: { locale: Locale }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.1, duration: 0.6 }}
-        className="absolute bottom-6 left-1/4 z-20 hidden -translate-x-1/2 lg:block"
+        className="absolute bottom-6 left-1/2 z-20 hidden -translate-x-1/2 lg:block"
         aria-hidden
       >
         <div className="flex h-[55px] w-[34px] items-start justify-center rounded-full border-2 border-white/80 px-3 pt-2.5">

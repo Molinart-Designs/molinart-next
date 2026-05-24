@@ -15,15 +15,18 @@ type SideMenuProps = {
   locale: Locale;
   open: boolean;
   onClose: () => void;
-  alternateLocaleHref: string;
 };
 
-export function SideMenu({
-  locale,
-  open,
-  onClose,
-  alternateLocaleHref,
-}: SideMenuProps) {
+const navItemVariants = {
+  hidden: { opacity: 0, x: -12 },
+  visible: (index: number) => ({
+    opacity: 1,
+    x: 0,
+    transition: { delay: 0.05 + index * 0.04, duration: 0.35 },
+  }),
+};
+
+export function SideMenu({ locale, open, onClose }: SideMenuProps) {
   const content = siteContent[locale];
   const year = new Date().getFullYear();
   const { getSectionLinkProps } = useFullPageScroll();
@@ -37,53 +40,85 @@ export function SideMenu({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-black/60"
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm"
             aria-label={content.menu.close}
             onClick={onClose}
           />
           <motion.aside
-            initial={{ y: "-100%" }}
-            animate={{ y: 0 }}
-            exit={{ y: "-100%" }}
-            transition={{ type: "spring", stiffness: 280, damping: 32 }}
-            className="fixed inset-x-0 top-0 z-[70] flex max-h-[100dvh] flex-col bg-molinart-darker shadow-2xl"
+            initial={{ x: "-100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "-100%" }}
+            transition={{ type: "spring", stiffness: 320, damping: 34 }}
+            className="fixed inset-y-0 left-0 z-[70] flex w-full max-w-[min(100vw,20rem)] flex-col border-r border-white/10 bg-molinart-darker shadow-[4px_0_40px_rgba(0,0,0,0.45)] sm:max-w-xs"
+            role="dialog"
+            aria-modal="true"
+            aria-label={content.menu.open}
           >
-            <div className="flex items-center justify-between border-b border-white/10 px-6 py-5">
-              <Image src="/images/logo.png" alt="Molinart" width={120} height={48} />
+            <div className="h-1 shrink-0 bg-linear-to-r from-molinart-yellow via-molinart-yellow/60 to-transparent" />
+
+            <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
+              <Image
+                src="/images/logo.png"
+                alt="Molinart"
+                width={108}
+                height={40}
+                className="h-9 w-auto"
+              />
               <button
                 type="button"
                 onClick={onClose}
-                className="inline-flex size-10 items-center justify-center border border-white/20 text-white transition-colors hover:border-molinart-yellow hover:text-molinart-yellow"
+                className="inline-flex size-10 items-center justify-center border border-white/15 text-white transition-colors hover:border-molinart-yellow hover:bg-molinart-yellow/10 hover:text-molinart-yellow"
                 aria-label={content.menu.close}
               >
-                <X className="size-5" />
+                <X className="size-5" strokeWidth={2} />
               </button>
             </div>
 
-            <nav className="flex-1 overflow-y-auto px-6 py-8" aria-label="Main">
+            <nav className="flex-1 overflow-y-auto px-4 py-6" aria-label="Main">
+              <p className="mb-4 px-2 font-heading text-[0.65rem] tracking-[0.25em] text-molinart-muted uppercase">
+                {content.menu.navLabel}
+              </p>
               <ul className="space-y-1">
-                {content.navigation.map((item) => {
+                {content.navigation.map((item, index) => {
                   const linkProps = getSectionLinkProps(item.id, item.href);
 
                   return (
-                    <li key={item.id}>
+                    <motion.li
+                      key={item.id}
+                      custom={index}
+                      initial="hidden"
+                      animate="visible"
+                      variants={navItemVariants}
+                    >
                       <Link
                         {...linkProps}
                         onClick={(event) => {
                           linkProps.onClick(event);
                           onClose();
                         }}
-                        className="block border-l-2 border-transparent py-3 pl-4 font-heading text-lg tracking-wide text-white uppercase transition-colors hover:border-molinart-yellow hover:text-molinart-yellow"
+                        className={cn(
+                          "group flex items-center gap-3 border border-transparent px-3 py-3 transition-colors",
+                          "hover:border-white/10 hover:bg-white/5",
+                        )}
                       >
-                        {item.label}
+                        <span
+                          className="font-heading text-[0.65rem] tracking-widest text-molinart-yellow/70 transition-colors group-hover:text-molinart-yellow"
+                          aria-hidden
+                        >
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        <span className="font-heading text-base tracking-wide text-white uppercase transition-colors group-hover:text-molinart-yellow">
+                          {item.label}
+                        </span>
                       </Link>
-                    </li>
+                    </motion.li>
                   );
                 })}
               </ul>
             </nav>
 
-            <div className="space-y-6 border-t border-white/10 px-6 py-8">
+            <div className="shrink-0 space-y-5 border-t border-white/10 bg-molinart-dark/40 px-5 py-6">
               <a
                 href={content.resume.href}
                 download={content.resume.filename}
@@ -94,15 +129,8 @@ export function SideMenu({
               >
                 {content.resume.label}
               </a>
-              <Link
-                href={alternateLocaleHref}
-                className="block text-center text-sm text-molinart-muted transition-colors hover:text-molinart-yellow"
-                aria-label={content.language.label}
-              >
-                {content.language.next}
-              </Link>
               <SocialLinks className="justify-center" />
-              <p className="text-center text-sm text-molinart-muted">
+              <p className="text-center text-xs leading-relaxed text-molinart-muted">
                 {content.footer.copyright(year)}
               </p>
             </div>

@@ -7,7 +7,6 @@ export const siteConfig = {
 } as const;
 
 export const socialLinks = [
-  { name: "Facebook", href: "https://www.facebook.com/molina90", label: "Facebook" },
   { name: "Instagram", href: "https://www.instagram.com/emolinarts/", label: "Instagram" },
   { name: "GitHub", href: "https://github.com/Molinart-Designs/", label: "GitHub" },
   { name: "LinkedIn", href: "https://www.linkedin.com/in/molinart/", label: "LinkedIn" },
@@ -120,6 +119,7 @@ export const siteContent = {
     menu: {
       open: "Abrir menú",
       close: "Cerrar menú",
+      navLabel: "Menú",
     },
     language: {
       label: "Cambiar idioma",
@@ -148,6 +148,7 @@ export const siteContent = {
     menu: {
       open: "Open menu",
       close: "Close menu",
+      navLabel: "Menu",
     },
     language: {
       label: "Change language",

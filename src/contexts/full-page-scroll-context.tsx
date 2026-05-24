@@ -16,6 +16,7 @@ import {
   FULLPAGE_SCROLL_MS,
   getActiveSectionIndex,
   getFullPageSections,
+  shouldDelegateWheelToInnerScroll,
 } from "@/lib/full-page";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { cn } from "@/lib/utils";
@@ -125,12 +126,24 @@ export function FullPageScrollProvider({
         return;
       }
 
+      const sections = getFullPageSections(container, sectionIds);
+      const current = getActiveSectionIndex(container, sections);
+      const activeSection = sections[current] ?? null;
+
+      if (
+        shouldDelegateWheelToInnerScroll(
+          event.target,
+          activeSection,
+          event.deltaY,
+        )
+      ) {
+        return;
+      }
+
       if (Math.abs(event.deltaY) < 8) {
         return;
       }
 
-      const sections = getFullPageSections(container, sectionIds);
-      const current = getActiveSectionIndex(container, sections);
       const next = event.deltaY > 0 ? current + 1 : current - 1;
 
       if (next < 0 || next >= sections.length) {

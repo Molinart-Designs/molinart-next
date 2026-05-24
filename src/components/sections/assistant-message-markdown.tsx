@@ -1,65 +1,89 @@
+"use client";
+
+import type { ReactNode } from "react";
 import type { Components } from "react-markdown";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-import type { Locale } from "@/content/i18n";
 import { siteConfig } from "@/content/site";
+import { useFullPageScroll } from "@/contexts/full-page-scroll-context";
 import { cn } from "@/lib/utils";
 
-function resolveAssistantLinkHref(href: string | undefined, locale: Locale): string | undefined {
+const linkClassName =
+  "text-molinart-yellow underline underline-offset-2 transition-colors hover:text-white";
+
+function isContactAssistantLink(href: string | undefined): boolean {
   if (!href) {
-    return href;
+    return false;
+  }
+
+  if (href === "#contact" || href.endsWith("#contact")) {
+    return true;
   }
 
   try {
     const url = new URL(href, siteConfig.url);
     const host = url.hostname.replace(/^www\./, "");
     if (host !== "molinart.net") {
-      return href;
+      return false;
+    }
+
+    if (url.hash === "#contact") {
+      return true;
     }
 
     const path = url.pathname.replace(/\/$/, "") || "/";
-    const contactUrl = `${siteConfig.url}/${locale}#contact`;
-
-    if (url.hash === "#contact") {
-      return contactUrl;
-    }
-
-    // Homepage without section hash (common when the model points to the root site)
-    if (path === "/" || path === "") {
-      return contactUrl;
-    }
+    return path === "/" || path === "";
   } catch {
-    return href;
+    return false;
   }
-
-  return href;
 }
 
-function createMarkdownComponents(locale: Locale): Components {
-  return {
-    a: ({ href, children }) => (
-      <a
-        href={resolveAssistantLinkHref(href, locale)}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-molinart-yellow underline underline-offset-2 transition-colors hover:text-white"
-      >
+function AssistantMarkdownLink({
+  href,
+  children,
+}: {
+  href?: string;
+  children?: ReactNode;
+}) {
+  const { getSectionLinkProps } = useFullPageScroll();
+
+  if (isContactAssistantLink(href)) {
+    const { href: contactHref, onClick } = getSectionLinkProps("contact", "#contact");
+    return (
+      <a href={contactHref} onClick={onClick} className={linkClassName}>
         {children}
       </a>
+    );
+  }
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={linkClassName}
+    >
+      {children}
+    </a>
+  );
+}
+
+function createMarkdownComponents(): Components {
+  return {
+    a: ({ href, children }) => (
+      <AssistantMarkdownLink href={href}>{children}</AssistantMarkdownLink>
     ),
   };
 }
 
 type AssistantMessageMarkdownProps = {
   content: string;
-  locale: Locale;
   className?: string;
 };
 
 export function AssistantMessageMarkdown({
   content,
-  locale,
   className,
 }: AssistantMessageMarkdownProps) {
   return (
@@ -76,7 +100,7 @@ export function AssistantMessageMarkdown({
     >
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
-        components={createMarkdownComponents(locale)}
+        components={createMarkdownComponents()}
       >
         {content}
       </ReactMarkdown>

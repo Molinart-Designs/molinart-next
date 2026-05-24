@@ -9,6 +9,7 @@ import type { Locale } from "@/content/i18n";
 import { SectionHeading } from "@/components/layout/section-heading";
 import { SectionShell } from "@/components/layout/section-shell";
 import { AssistantMessageMarkdown } from "@/components/sections/assistant-message-markdown";
+import { fullPageNestedScrollClass } from "@/lib/full-page";
 import { cn } from "@/lib/utils";
 
 type ChatMessage = {
@@ -157,7 +158,10 @@ export function AskEmilioSection({ locale }: { locale: Locale }) {
         {messages.length > 0 ? (
           <div
             ref={threadRef}
-            className="mb-4 max-h-72 space-y-3 overflow-y-auto border border-white/10 bg-molinart-dark/60 p-4"
+            className={cn(
+              "mb-4 max-h-72 space-y-3 border border-white/10 bg-molinart-dark/60 p-4",
+              fullPageNestedScrollClass,
+            )}
             aria-live="polite"
           >
             {messages.map((message) => (
@@ -181,7 +185,7 @@ export function AskEmilioSection({ locale }: { locale: Locale }) {
                     : content.assistantLabel}
                 </span>
                 {message.role === "assistant" ? (
-                  <AssistantMessageMarkdown content={message.content} locale={locale} />
+                  <AssistantMessageMarkdown content={message.content} />
                 ) : (
                   <p className="whitespace-pre-wrap">{message.content}</p>
                 )}
