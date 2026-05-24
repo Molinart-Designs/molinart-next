@@ -22,23 +22,43 @@ export function TechnologiesSection({ locale }: { locale: Locale }) {
         stat={content.stats}
       />
 
-      <ul className="grid grid-cols-3 gap-6 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
-        {content.items.map((tech) => (
-          <li key={tech.name} className="flex flex-col items-center gap-3">
-            <div className="flex size-16 items-center justify-center border border-white/10 bg-molinart-darker/60 p-3 transition-colors hover:border-molinart-yellow">
-              <Image
-                src={tech.iconUrl}
-                alt=""
-                width={40}
-                height={40}
-                className="size-10 object-contain invert"
-                aria-hidden
-              />
-            </div>
-            <span className="text-center text-xs text-molinart-muted">{tech.name}</span>
-          </li>
+      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        {content.groups.map((group) => (
+          <article
+            key={group.id}
+            className="flex flex-col border border-white/10 bg-molinart-darker/60 p-5 md:p-6"
+          >
+            <h3 className="mb-2 font-heading text-lg tracking-wide text-molinart-yellow uppercase">
+              {group.title}
+            </h3>
+            <p className="mb-5 flex-1 text-sm leading-relaxed text-white/75">
+              {group.summary}
+            </p>
+            <ul className="flex flex-wrap gap-2">
+              {group.items.map((item) => (
+                <li
+                  key={item.name}
+                  className="inline-flex items-center gap-2 border border-white/10 bg-molinart-dark/80 px-2.5 py-1.5 text-xs text-molinart-muted transition-colors hover:border-molinart-yellow/50 hover:text-white/90"
+                >
+                  {item.iconUrl ? (
+                    <span className="flex size-5 shrink-0 items-center justify-center">
+                      <Image
+                        src={item.iconUrl}
+                        alt=""
+                        width={20}
+                        height={20}
+                        className="size-4 object-contain invert"
+                        aria-hidden
+                      />
+                    </span>
+                  ) : null}
+                  <span>{item.name}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
         ))}
-      </ul>
+      </div>
     </SectionShell>
   );
 }

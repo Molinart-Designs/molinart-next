@@ -4,6 +4,7 @@ import { Oswald, Roboto } from "next/font/google";
 
 import { hasLocale, locales } from "@/content/i18n";
 import { siteConfig, siteMetadata } from "@/content/site";
+import { StructuredData } from "@/components/seo/structured-data";
 
 import "../globals.css";
 
@@ -36,6 +37,10 @@ export async function generateMetadata({
 
   const metadata = siteMetadata[lang];
 
+  // TODO: Add Open Graph image at public/images/og-image.jpg (1200×630) and set:
+  // openGraph.images: [{ url: "/images/og-image.jpg", width: 1200, height: 630, alt: "..." }]
+  // twitter.images: ["/images/og-image.jpg"]
+
   return {
     metadataBase: new URL(siteConfig.url),
     title: metadata.title,
@@ -47,6 +52,7 @@ export async function generateMetadata({
       languages: {
         es: "/es",
         en: "/en",
+        "x-default": "/en",
       },
     },
     openGraph: {
@@ -54,8 +60,13 @@ export async function generateMetadata({
       locale: metadata.locale,
       url: `/${lang}`,
       siteName: siteConfig.name,
-      title: metadata.title,
-      description: metadata.description,
+      title: metadata.openGraph.title,
+      description: metadata.openGraph.description,
+    },
+    twitter: {
+      card: "summary",
+      title: metadata.twitter.title,
+      description: metadata.twitter.description,
     },
   };
 }
@@ -77,6 +88,7 @@ export default async function RootLayout({
     <html lang={lang} className={`${oswald.variable} ${roboto.variable}`}>
       <head>
         <link rel="icon" href="/images/favicon.ico" />
+        <StructuredData locale={lang} />
       </head>
       <body>{children}</body>
     </html>

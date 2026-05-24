@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
+import Link from "next/link";
 import { useState, type FormEvent } from "react";
 
 import { contactContent } from "@/content/contact";
@@ -86,7 +87,9 @@ export function ContactSection({ locale }: { locale: Locale }) {
 
       <div className="grid gap-10 lg:grid-cols-2">
         <div>
-          <p className="mb-8 text-lg text-molinart-muted">{content.description}</p>
+          <p className="mb-8 text-lg leading-relaxed text-molinart-muted">
+            {content.description}
+          </p>
           <form className="space-y-5" onSubmit={handleSubmit}>
             <div className="grid gap-5 sm:grid-cols-2">
               <div>
@@ -99,7 +102,7 @@ export function ContactSection({ locale }: { locale: Locale }) {
                   required
                   disabled={status === "loading"}
                   className={inputClass}
-                  placeholder={content.form.name}
+                  placeholder={content.form.namePlaceholder}
                   autoComplete="name"
                 />
               </div>
@@ -113,7 +116,7 @@ export function ContactSection({ locale }: { locale: Locale }) {
                   type="tel"
                   disabled={status === "loading"}
                   className={inputClass}
-                  placeholder={content.form.phone}
+                  placeholder={content.form.phonePlaceholder}
                   autoComplete="tel"
                 />
               </div>
@@ -129,7 +132,7 @@ export function ContactSection({ locale }: { locale: Locale }) {
                 required
                 disabled={status === "loading"}
                 className={inputClass}
-                placeholder={content.form.email}
+                placeholder={content.form.emailPlaceholder}
                 autoComplete="email"
               />
             </div>
@@ -144,7 +147,7 @@ export function ContactSection({ locale }: { locale: Locale }) {
                 required
                 disabled={status === "loading"}
                 className={cn(inputClass, "resize-none")}
-                placeholder={content.form.message}
+                placeholder={content.form.messagePlaceholder}
               />
             </div>
             <p className="text-sm text-molinart-muted">{content.form.spamNotice}</p>
@@ -187,7 +190,24 @@ export function ContactSection({ locale }: { locale: Locale }) {
           <h3 className="mb-2 font-heading text-3xl tracking-wide text-molinart-yellow uppercase">
             {content.sidebar.title}
           </h3>
-          <p className="text-lg text-white/85">{content.sidebar.subtitle}</p>
+          <p className="mb-6 text-sm tracking-wide text-molinart-muted uppercase">
+            {content.sidebar.subtitle}
+          </p>
+          <ul className="space-y-3">
+            {content.sidebar.links.map((link) => (
+              <li key={link.href + link.label}>
+                <Link
+                  href={link.href}
+                  {...(link.external
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
+                  className="inline-flex border border-white/15 px-4 py-2.5 font-heading text-xs tracking-wider text-white uppercase transition-colors hover:border-molinart-yellow hover:text-molinart-yellow"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </motion.aside>
       </div>
     </SectionShell>

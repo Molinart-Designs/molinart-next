@@ -1,15 +1,22 @@
 import type { MetadataRoute } from "next";
 
-import { locales } from "@/content/i18n";
+import { locales, type Locale } from "@/content/i18n";
 import { siteConfig } from "@/content/site";
+
+const localePriority: Record<Locale, number> = {
+  en: 1,
+  es: 0.9,
+};
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
 
-  return locales.map((lang) => ({
-    url: `${siteConfig.url}/${lang}`,
-    lastModified,
-    changeFrequency: "monthly",
-    priority: lang === "es" ? 1 : 0.9,
-  }));
+  return [...locales]
+    .sort((a, b) => localePriority[b] - localePriority[a])
+    .map((lang) => ({
+      url: `${siteConfig.url}/${lang}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: localePriority[lang],
+    }));
 }

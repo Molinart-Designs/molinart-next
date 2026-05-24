@@ -3,49 +3,107 @@ import type { LocalizedContent } from "@/content/i18n";
 export const siteConfig = {
   name: "Molinart",
   author: "Emilio Molina",
-  url: "https://molinart.net",
+  url: "https://www.molinart.net",
 } as const;
 
 export const socialLinks = [
   { name: "Facebook", href: "https://www.facebook.com/molina90", label: "Facebook" },
   { name: "Instagram", href: "https://www.instagram.com/emolinarts/", label: "Instagram" },
+  { name: "GitHub", href: "https://github.com/Molinart-Designs/", label: "GitHub" },
   { name: "LinkedIn", href: "https://www.linkedin.com/in/molinart/", label: "LinkedIn" },
 ] as const;
 
+/** Used by JSON-LD Person.sameAs */
+export const personSameAsUrls = socialLinks
+  .filter((link) => link.name === "LinkedIn" || link.name === "GitHub")
+  .map((link) => link.href);
+
 export const siteMetadata = {
   es: {
-    title: "Molinart | Emilio Molina",
+    title: "Emilio Molina | Ingeniero de Software Principal, Full-Stack e IA",
     description:
-      "Portafolio de Emilio Molina, Principal Software Engineer con experiencia en arquitectura full stack, modernización de plataformas, productos con IA y liderazgo técnico.",
+      "Ingeniero de Software Principal con más de 16 años de experiencia construyendo plataformas SaaS, empresariales, full-stack y habilitadas con IA usando PHP, Laravel, Node.js, React, Python, PostgreSQL, Docker y AWS.",
     locale: "es_MX",
     keywords: [
-      "Emilio Molina",
-      "Principal Software Engineer",
-      "desarrollo full stack",
+      "Ingeniero de Software Principal",
+      "Staff Software Engineer",
+      "Desarrollador Full Stack",
+      "Ingeniero IA",
       "arquitectura de software",
-      "inteligencia artificial",
-      "Molinart",
+      "plataformas SaaS",
+      "software empresarial",
+      "modernización legacy",
+      "APIs backend",
+      "aplicaciones cloud-native",
+      "AWS",
+      "Docker",
+      "PostgreSQL",
+      "FastAPI",
+      "Node.js",
+      "React",
+      "Laravel",
+      "PHP",
+      "sistemas RAG",
+      "asistentes de IA",
+      "liderazgo técnico",
     ],
+    openGraph: {
+      title: "Emilio Molina — Ingeniero de Software Principal & Full-Stack con IA",
+      description:
+        "Construyo y modernizo software empresarial, plataformas SaaS, APIs backend y productos habilitados con IA combinando arquitectura, pensamiento de producto y liderazgo técnico.",
+    },
+    twitter: {
+      title: "Emilio Molina — Ingeniero de Software Principal & Full-Stack con IA",
+      description:
+        "Construyo y modernizo software empresarial, plataformas SaaS, APIs backend y productos habilitados con IA combinando arquitectura, pensamiento de producto y liderazgo técnico.",
+    },
   },
   en: {
-    title: "Molinart | Emilio Molina",
+    title: "Emilio Molina | Principal Software Engineer, Full-Stack & AI Engineer",
     description:
-      "Portfolio of Emilio Molina, a Principal Software Engineer focused on full-stack architecture, platform modernization, AI-enabled products, and technical leadership.",
+      "Principal Software Engineer with 16+ years of experience building SaaS, enterprise, full-stack, and AI-enabled platforms using PHP, Laravel, Node.js, React, Python, PostgreSQL, Docker, and AWS.",
     locale: "en_US",
     keywords: [
-      "Emilio Molina",
       "Principal Software Engineer",
-      "full-stack development",
-      "software architecture",
-      "AI-enabled products",
-      "Molinart",
+      "Staff Software Engineer",
+      "Full-Stack Engineer",
+      "AI Engineer",
+      "LLM Engineer",
+      "SaaS platforms",
+      "enterprise software",
+      "legacy modernization",
+      "backend APIs",
+      "cloud-native applications",
+      "AWS",
+      "Docker",
+      "PostgreSQL",
+      "FastAPI",
+      "Node.js",
+      "React",
+      "Laravel",
+      "PHP",
+      "RAG systems",
+      "AI assistants",
+      "technical leadership",
     ],
+    openGraph: {
+      title: "Emilio Molina — Principal Software Engineer & AI/Full-Stack Developer",
+      description:
+        "I build and modernize enterprise software, SaaS platforms, backend APIs, and AI-enabled products with strong architecture, product thinking, and technical leadership.",
+    },
+    twitter: {
+      title: "Emilio Molina — Principal Software Engineer & AI/Full-Stack Developer",
+      description:
+        "I build and modernize enterprise software, SaaS platforms, backend APIs, and AI-enabled products with strong architecture, product thinking, and technical leadership.",
+    },
   },
 } as const satisfies LocalizedContent<{
   title: string;
   description: string;
   locale: string;
   keywords: readonly string[];
+  openGraph: { title: string; description: string };
+  twitter: { title: string; description: string };
 }>;
 
 export const siteContent = {

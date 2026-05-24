@@ -141,8 +141,19 @@ export function FullPageScrollProvider({
       goToIndex(next);
     };
 
+    const isEditableTarget = (target: EventTarget | null) => {
+      if (!(target instanceof HTMLElement)) {
+        return false;
+      }
+      const tag = target.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") {
+        return true;
+      }
+      return target.isContentEditable;
+    };
+
     const onKeyDown = (event: KeyboardEvent) => {
-      if (isAnimatingRef.current) {
+      if (isAnimatingRef.current || isEditableTarget(event.target)) {
         return;
       }
 

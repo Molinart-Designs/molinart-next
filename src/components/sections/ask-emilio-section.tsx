@@ -8,6 +8,7 @@ import { askEmilioContent } from "@/content/ask-emilio";
 import type { Locale } from "@/content/i18n";
 import { SectionHeading } from "@/components/layout/section-heading";
 import { SectionShell } from "@/components/layout/section-shell";
+import { AssistantMessageMarkdown } from "@/components/sections/assistant-message-markdown";
 import { cn } from "@/lib/utils";
 
 type ChatMessage = {
@@ -106,7 +107,10 @@ export function AskEmilioSection({ locale }: { locale: Locale }) {
         accent={content.heading.accent}
         title={content.heading.title}
       />
-      <p className="mb-8 max-w-2xl text-lg text-molinart-muted">{content.description}</p>
+      <div className="mb-8 max-w-2xl space-y-4">
+        <p className="text-lg text-molinart-muted">{content.description}</p>
+        <p className="text-sm leading-relaxed text-white/60">{content.secondaryNote}</p>
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -176,7 +180,11 @@ export function AskEmilioSection({ locale }: { locale: Locale }) {
                     ? content.youLabel
                     : content.assistantLabel}
                 </span>
-                <p className="whitespace-pre-wrap">{message.content}</p>
+                {message.role === "assistant" ? (
+                  <AssistantMessageMarkdown content={message.content} locale={locale} />
+                ) : (
+                  <p className="whitespace-pre-wrap">{message.content}</p>
+                )}
               </div>
             ))}
             {loading ? (

@@ -1,45 +1,15 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 
-import { skillBars, summaryContent } from "@/content/summary";
+import { summaryContent } from "@/content/summary";
 import type { Locale } from "@/content/i18n";
 import { SectionHeading } from "@/components/layout/section-heading";
 import { SectionShell } from "@/components/layout/section-shell";
 
-function ProgressBar({
-  name,
-  value,
-  inView,
-}: {
-  name: string;
-  value: number;
-  inView: boolean;
-}) {
-  return (
-    <li className="space-y-2">
-      <div className="flex justify-between text-sm">
-        <span className="font-medium text-white">{name}</span>
-        <span className="text-molinart-yellow">{value}%</span>
-      </div>
-      <div className="h-1.5 bg-white/10">
-        <motion.div
-          className="h-full bg-molinart-yellow"
-          initial={{ width: 0 }}
-          animate={{ width: inView ? `${value}%` : 0 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
-        />
-      </div>
-    </li>
-  );
-}
-
 export function SummarySection({ locale }: { locale: Locale }) {
   const content = summaryContent[locale];
   const years = new Date().getFullYear() - content.experienceYearsStart;
-  const barsRef = useRef<HTMLUListElement>(null);
-  const barsInView = useInView(barsRef, { once: true, margin: "-80px" });
 
   return (
     <SectionShell
@@ -53,9 +23,10 @@ export function SummarySection({ locale }: { locale: Locale }) {
         title={content.heading.title}
         stat={{ value: `${years}+`, label: content.experienceYearsLabel }}
       />
-      <p className="mb-10 max-w-3xl text-lg leading-relaxed text-white/85">
-        {content.intro}
-      </p>
+      <div className="mb-10 max-w-3xl space-y-5 text-lg leading-relaxed text-white/85">
+        <p>{content.intro}</p>
+        <p>{content.detail}</p>
+      </div>
 
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
         <div className="grid gap-6 sm:grid-cols-2">
@@ -80,16 +51,16 @@ export function SummarySection({ locale }: { locale: Locale }) {
 
         <div>
           <h3 className="mb-6 font-heading text-lg tracking-wide text-molinart-yellow uppercase">
-            {content.mainTechnologiesTitle}
+            {content.coreStrengthsTitle}
           </h3>
-          <ul ref={barsRef} className="space-y-5">
-            {skillBars.map((skill) => (
-              <ProgressBar
-                key={skill.name}
-                name={skill.name}
-                value={skill.value}
-                inView={barsInView}
-              />
+          <ul className="space-y-4">
+            {content.coreStrengths.map((strength) => (
+              <li
+                key={strength}
+                className="border-l-2 border-molinart-yellow bg-molinart-darker/40 py-3 pl-4 text-sm leading-relaxed text-white/85"
+              >
+                {strength}
+              </li>
             ))}
           </ul>
         </div>

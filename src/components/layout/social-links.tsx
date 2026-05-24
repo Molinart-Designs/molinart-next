@@ -19,6 +19,14 @@ function InstagramIcon({ className }: { className?: string }) {
   );
 }
 
+function GitHubIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-3.795-.735-.405-1.02-1.005-1.29-1.005-1.29-.81-.555.06-.555.06-.555 1.005.075 1.53 1.035 1.53 1.035.9 1.545 2.355 1.095 2.925.84.09-.645.315-1.095.57-1.35-2.4-.27-4.92-1.2-4.92-5.355 0-1.185.42-2.145 1.125-2.895-.12-.27-.495-1.365.105-2.85 0 0 .93-.3 3.045 1.11.885-.24 1.83-.36 2.775-.36.945 0 1.89.12 2.775.36 2.115-1.425 3.045-1.11 3.045-1.11.6 1.485.225 2.58.105 2.85.705.75 1.125 1.71 1.125 2.895 0 4.17-2.52 5.085-4.92 5.355.39.33.735.96.735 1.935 0 1.395-.015 2.52-.015 2.85 0 .315.225.69.825.57A8.205 8.205 0 0024 12c0-6.63-5.37-12-12-12z" />
+    </svg>
+  );
+}
+
 function LinkedInIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -30,6 +38,7 @@ function LinkedInIcon({ className }: { className?: string }) {
 const iconByName = {
   Facebook: FacebookIcon,
   Instagram: InstagramIcon,
+  GitHub: GitHubIcon,
   LinkedIn: LinkedInIcon,
 } as const;
 
